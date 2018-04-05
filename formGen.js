@@ -167,6 +167,7 @@ function addChild()
     console.log('this.parentElement', this.parentElement);
     const item = formFilters();
     const parent = this.parentElement;
+    const wrapper = parent.parentElement;
     parent.insertAdjacentHTML('beforeend', item.select.items);
     loadElements();
   } else {
