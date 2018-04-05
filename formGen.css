@@ -1,0 +1,12 @@
+.form--item__wrapper {
+  margin: 1em;
+  padding: 1em 0;
+}
+
+.form--item__wrapper:not(:first-child) {
+  border-top: solid 1px #ccc;
+}
+
+.form--item__wrapper .form--title {
+  margin: 0;
+}

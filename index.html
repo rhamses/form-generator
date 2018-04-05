@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="formGen.css">
+  <style>
+  #target,
+  #list {
+    border: solid 1px #000;
+    height: 25vw;
+    width: 25vw;
+    margin: 0 1em;
+    background-color: #efefef;
+  }
+
+  i{
+    font-style: italic;
+  }
+
+  small{
+    font-size: .9em;
+  }
+
+  main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body {
+    font-family: sans-serif;
+  }
+</style>
+</head>
+<body>
+  <main>
+    <div id="target">Drop Zone</div>
+    <div id="list">
+      <div id="list-1" draggable="true" class="draggable" data-type="input">input</div>
+      <div id="list-2" draggable="true" class="draggable" data-type="radio">radio</div>
+      <div id="list-3" draggable="true" class="draggable" data-type="checkbox">checkbox</div>
+      <div id="list-4" draggable="true" class="draggable" data-type="select">select</div>
+      <div id="list-5" draggable="true" class="draggable" data-type="button">button</div>
+    </div>
+    <button id="genJson">Generate JSON</button>
+  </main>
+  <script src="formGen.js"></script>
+</body>
+</html>
