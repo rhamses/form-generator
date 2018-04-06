@@ -11,7 +11,86 @@ dropTarget.addEventListener("drop", drop_handler);
 dropTarget.addEventListener("dragover", dragover_handler);
 draggables.forEach( draggable => draggable.addEventListener("dragstart", dragstart_handler));
 
-jsonButton.addEventListener("click", generateJson);
+jsonButton.addEventListener("click", function(){
+  // const jsonForm = generateJson();
+  const jsonForm = [{
+    "title":"Email:",
+    "type":"text",
+    "option":"isEmail"
+  },
+  {
+    "title":"Sexo:",
+    "type":"radio",
+    "required":true,
+    "childItems":["mas", "fem"]
+  },{
+    "title":"Cor:",
+    "type":"checkbox",
+    "childItems":["zaul", "yellow"]
+  },{
+    "title":"Signo:",
+    "type":"select",
+    "childItems":["Aries", "Peixes"]
+  },{
+    "title":"Enviar",
+    "type":"button"
+  }];
+  console.log('resposta', jsonForm);
+  // example result
+  const result = document.querySelector("#result");
+  const preview = document.querySelector("#preview");
+
+  result.insertAdjacentHTML('beforeend', `<code> ${JSON.stringify(jsonForm)} </code>`);
+
+  const form = document.createElement("form");
+
+  preview.appendChild(form);
+
+  jsonForm.map((el, index, array) =>{
+    let type = '';
+    let attr = '';
+    let childItem = '';
+    let value = '';
+    let select = '';
+
+    if (el.type == "text") {
+      if (el.option) {
+        type = el.option;    
+      }
+    } else {
+      type = el.type;
+    }
+
+    if (el.type == 'select') {
+      input = `<select name="${el.title}" id="${el.title}" ${attr}>`;
+    } else {
+      input = `<input name="${el.title}" type="${type}" value="${value}" ${attr}>`;  
+    }
+
+    if (el.required) {
+      attr = 'required';
+    }
+
+    if (el.childItems) {
+      if (el.type != "select") {
+        input = '';
+        for (item of el.childItems) {
+          input += `<input name="${el.title}" type="${type}" value="${item}" ${attr}>${item}`;
+        }
+      } else {
+        for (item of el.childItems) {
+          childItem += `<option value="${item}">${item}</option>`;
+        }
+        input += `${childItem} </select>`;
+      }
+    }
+
+    let label = `<div class="form--element"><label>${el.title}</label>${input}</div>`;
+
+    form.insertAdjacentHTML('beforeEnd', label);
+  });
+
+});
 
 function dragstart_handler(ev) 
 {
@@ -54,14 +133,12 @@ function createFormElement(htmlType)
     ${options.validation.required}`;
     break;
     case "radio":
-    inputType = `<label><span contenteditable>Item name:</span> <input type="radio" name="inputRadio"></label>`;
-    inputValidation = `${options.validation.required}
-    ${options.select.all}`;
+    inputType = `<input type="radio">Item`;
+    inputValidation = `${options.validation.required} ${options.select.all} <div class="child--item__wrapper"><button class="child--items__button">Adicionar novo</button>${options.select.items}</div>`;
     break;
     case "checkbox":
-    inputType = `<label><span contenteditable>Item name:</span> <input type="check" name="inputCheck"></label>`;
-    inputValidation = `${options.validation.required}
-    ${options.select.one}`;
+    inputType = `<input type="checkbox">Item`;
+    inputValidation = `${options.validation.required} ${options.select.one} <div class="child--item__wrapper"><button class="child--items__button">Adicionar novo</button>${options.select.items}</div>`;
     break;
     case "select":
     inputType = `<select name="inputSelect" class="sampleSelect"></select>`;
@@ -103,68 +180,19 @@ function deleteItem()
   document.getElementById("target").removeChild(parentEl);
 }
 
-// function inputFormat()
-// {
-//   let type;
-//   let placeholder;
-//   let pattern;
-//   let required;
-//   let inputContext = Array.from(this.closest(".form--item__wrapper").children).find(el => el.classList[0] == "input-highlight").firstElementChild;
-
-//   switch(this.name.split('-')[0]){
-//     case "whichType":
-//     if(this.value == "isEmail"){
-//       type = inputContext.setAttribute("type", "email");
-//       placeholder = inputContext.setAttribute("placeholder", "Enter your email");
-//     }
-
-//     if(this.value == "isNumber"){
-//       type = inputContext.setAttribute("type", "number");
-//       placeholder = inputContext.setAttribute("placeholder", "Enter number values");
-//     }
-
-//     if(this.value == "isRegex"){
-//       type = inputContext.setAttribute("type", "text");
-//       placeholder = inputContext.setAttribute("placeholder", "");
-//       pattern = inputContext.setAttribute("pattern", this.value);
-//     }
-//     break;
-//     case "isRequired":
-//     required = inputContext.setAttribute("required", "required");
-//     break;
-//     default:
-//     console.log("escolha padrao");
-//     break;
-//   }
-
-//   if(form.find(item => item.index == index)){
-//     item.type = type,
-//     item.placeholder = (placeholder ) ? placeholder : null,
-//     item.pattern = pattern,
-//     item.required = required
-//   } else {
-//     form.push({
-//       index: index,
-//       type: type,
-//       placeholder: placeholder,
-//       pattern: pattern,
-//       required: required
-//     });
-//   }
-// }
-
 function inputTitle()
 {
+  // console.log('aaaa', this.name, this.name == "childItem[]", this.nextElementSibling.children, this, e);
   if (this.nextElementSibling.children.item("button")) {
+    console.log('teste');
     this.nextElementSibling.children.item("button").innerHTML = this.children.item("span").innerHTML;
-  }
+  } 
 }
 
 function addChild()
 {
   console.log('Comentário', this.innerHTML);
   if (this.innerHTML.match(/adicionar/i)) {
-    console.log('this.parentElement', this.parentElement);
     const item = formFilters();
     const parent = this.parentElement;
     const wrapper = parent.parentElement;
@@ -179,14 +207,16 @@ function addChild()
 function loadElements()
 {
   allFormTitles = document.querySelectorAll('.form--title');
+  allChildTeams = document.querySelectorAll('.child--items input[type=text]');
   allCheckRadio = document.querySelectorAll("#target input"); 
   allButtons = document.querySelectorAll("button[data-action]");
   allChildItemsButtons = document.querySelectorAll(".child--items__button");
 
   allButtons.forEach(button => button.addEventListener("click", deleteItem));
   // allCheckRadio.forEach(button => button.addEventListener("click", inputFormat));
-  allFormTitles.forEach(title => title.addEventListener("keyup", inputTitle))
-  allChildItemsButtons.forEach(title => title.addEventListener("click", addChild))
+  allFormTitles.forEach(title => title.addEventListener("keyup", inputTitle));
+  allChildTeams.forEach(title => title.addEventListener("keyup", inputTitle));
+  allChildItemsButtons.forEach(title => title.addEventListener("click", addChild));
 }
 
 function generateJson()
@@ -196,6 +226,7 @@ function generateJson()
   for (item of items) {
     const childrens = Array.from(item.children);
     const objItem = {};
+    const childItems = [];
     let title = '';
     let option = '';
     let required = '';
@@ -209,7 +240,13 @@ function generateJson()
       }
 
       if (el.classList.contains("input-highlight")) {
-        objItem["type"] = el.children[0].tagName.toLowerCase();
+        let input = '';
+        if (el.children[0].tagName.toLowerCase() == "input") {
+          input = el.children[0].type;
+        } else {
+          input = el.children[0].tagName.toLowerCase();
+        }
+        objItem["type"] = input;
       }
 
       if (el.classList.contains("option--container")) {
@@ -224,14 +261,27 @@ function generateJson()
         }
       }
 
+      if (el.classList.contains("child--item__wrapper")) {
+        const childItems = Array.from(el.children);
+        const childItemArray = [];
+        childItems.map((el, index, array) => {
+          if (el.firstElementChild) {
+            if (el.firstElementChild.tagName.toLowerCase() == "input") {
+              if (el.firstElementChild.value.length > 0) {
+                childItemArray.push(el.firstElementChild.value);
+              }
+            }
+          }
+        });
+        objItem["childItems"] = childItemArray;
+      }
+
       if ((index + 1) == array.length) {
         jsonObject.push(objItem);
       }
     })
-
-    console.log('jsonObject', jsonObject);
-
   }
+  return jsonObject;
 }
 
     /*
