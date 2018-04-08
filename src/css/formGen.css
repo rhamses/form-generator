@@ -1,0 +1,69 @@
+/**********************************************
+*
+*    Root Component
+*
+**********************************************/
+.form--item__wrapper {
+  margin: 1em;
+  padding: 1em;
+  position: relative;
+
+  border: dashed 1px #000;
+  font-size:  16px;
+  cursor: crosshair;
+  transition: all .2s linear;
+}
+
+.form--item__wrapper.hide {
+  height: 30px;
+  overflow: hidden;
+}
+
+.form--item__wrapper .action--wrapper {
+  float: right;
+}
+
+.form--item__wrapper .form--title {
+  margin: .1em 0 .5em;
+
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.form--item__wrapper .option--container {
+  font-size: .9em;
+  text-transform: lowercase;
+}
+/**********************************************
+*
+*    Example Input Wrapper
+*
+**********************************************/
+.input-highlight {
+  margin: .5em 0;
+}
+
+.input-highlight input[type="text"],
+.inputType {
+  width:  100%;
+}
+
+.inputType {
+  margin-bottom: 1em;
+}
+/**********************************************
+*
+*    Child Items
+*
+**********************************************/
+.child--item__wrapper {
+  margin: .5em 0;
+}
+.child--items {
+  margin: .5em 0;
+}
+
+.resultado {
+  height: 400px;
+  width: 100%;
+}

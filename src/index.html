@@ -2,7 +2,8 @@
 <html>
 <head>
   <title></title>
-  <link rel="stylesheet" type="text/css" href="formGen.css">
+  <link rel="stylesheet" type="text/css" href="css/formGen.css">
+  <link rel="stylesheet" type="text/css" href="css/exampleForm.css">
   <style>
   #target,
   #result,
@@ -25,6 +26,19 @@
 
   #genJson {
     margin: 0 1em;
+  }
+
+  #list {
+    align-self: flex-end;
+  }
+
+  #header {
+    margin: 1em 0;
+    padding: 1em;
+    width:  100%;
+    
+    border: solid 1px #ccc;
+
   }
 
   #list div {
@@ -51,6 +65,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap:  wrap;
   }
 
   body {
@@ -60,21 +75,22 @@
 </head>
 <body>
   <main>
+    <div id="header">
+      <label>Nome do Template:</label>
+      <input type="text" name="frmTemplate">
+    </div>
     <div id="target">Drop Zone</div>
     <div id="list">
       <div id="list-1" draggable="true" class="draggable" data-type="input">input</div>
       <div id="list-2" draggable="true" class="draggable" data-type="radio">radio</div>
       <div id="list-3" draggable="true" class="draggable" data-type="checkbox">checkbox</div>
       <div id="list-4" draggable="true" class="draggable" data-type="select">select</div>
-      <div id="list-5" draggable="true" class="draggable" data-type="button">button</div>
+      <!-- <div id="list-5" draggable="true" class="draggable" data-type="button">button</div> -->
+      <div id="list-6" draggable="true" class="draggable" data-type="upload">Upload</div>
     </div>
     <button id="genJson">Generate JSON</button>
     <div id="result"></div>
     <div id="preview"></div>
   </main>
-  <select>
-    <option value="teste">Teste</option>
-  </select>
-  <script src="formGen.js"></script>
 </body>
 </html>

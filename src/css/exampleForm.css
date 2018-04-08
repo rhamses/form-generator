@@ -1,0 +1,29 @@
+.form--element {
+  display:  block;
+  margin: 1em;
+
+  font-size:  16px;
+}
+
+.form--element label {
+  display: block;
+  font-size: .9em;
+}
+
+.form--element input:not([type="radio"]),
+.form--element input:not([type="checkbox"]),
+.form--element textarea,
+.form--element select {
+  padding: .5em;
+  width: 95%;
+
+  border: solid 1px #ccc;
+}
+
+.form--element textarea {
+  height: 50px;
+}
+
+.form--element select {
+  width: 98%;
+}
