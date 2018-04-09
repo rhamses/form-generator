@@ -198,10 +198,13 @@ function generateJson()
 
   jsonObject.push({formName: templateName});
 
-  for (let str of templateName.split(" ")) {
-    console.log('str', str);
-    formNameSpace += str[0].toUpperCase();
+  if (templateName) {
+    for (let str of templateName.split(" ")) {
+      console.log('str', str);
+      formNameSpace += str[0].toUpperCase();
+    }
   }
+
   for (let item of items) {
     const childrens = Array.from(item.children);
     const childItems = [];
@@ -287,12 +290,13 @@ function createFormHtml()
     let select = '';
     let label = '';
     let legend = '';
-    let component
+    let component = '';
 
-    if (el.formName) {
+    form.classList.add("form--wrapper");
+
+    if (el.formName != null) {
       form.id = `frm${Slug(el.formName)}`;
       component = `<legend>${el.formName}</legend>`;
-      form.classList.add("form--wrapper")
     }
 
     if (el.required) {
