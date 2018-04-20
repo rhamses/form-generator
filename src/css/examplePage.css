@@ -1,0 +1,193 @@
+/**********************************************
+*
+*
+*    Global Styles
+*
+*
+**********************************************/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+i {
+  font-style: italic;
+}
+
+small{
+  font-size: .9em;
+}
+
+main,
+.flex {
+  display: flex;
+  align-items: center;
+  flex-wrap:  wrap;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+button {
+  padding:  .5em;
+
+  background:  transparent;
+  border: solid 1px #000;
+  cursor: pointer;
+}
+
+.row {
+  width: 100%;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90vw;
+}
+
+.hide {
+  display: none !important;
+}
+/**********************************************
+*
+*
+*    Buttons
+*
+*
+**********************************************/
+.btn-json {
+  margin-bottom: 1em;
+}
+
+.btn-success {
+  width: 100%;
+
+  background-color: #50a866;
+  border-color: #167f2f;
+  color: #fff;
+}
+
+.delete {
+  background-color: #d60000;
+  border-color: #d60000;
+  color: #fff;
+}
+/**********************************************
+*
+*
+*    Drop Zones
+*
+*
+**********************************************/
+#target,
+#result,
+#preview { 
+  border: solid 1px #ccc;
+  min-height: 25vw;
+  width: 25vw;
+  margin: 0;
+  position: relative;
+  background-color: #efefef;
+}
+
+#result,
+#preview {
+  align-self: stretch;
+}
+
+#list {
+  width: 16vw;
+
+  align-self: flex-end;
+  -webkit-touch-callout: none; 
+  -webkit-user-select: none; 
+  -khtml-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+  user-select: none; 
+}
+
+#intro {
+  display:  flex;
+  align-items: center;
+  justify-content: center;
+  left: 5%;
+  height: 90%;
+  top: 5%;
+  width: 90%;
+  position: absolute;
+
+  border: dashed 2px #aaa;
+  border-radius:  10px;
+}
+
+#result {
+  margin-top: 2em;
+  width:  100%;
+}
+
+.hovering .form--item:last-child {
+  border-bottom:  red 10px solid;
+}
+
+/**********************************************
+*
+*
+*    Header
+*
+*
+**********************************************/
+#header {
+  margin: 1em 0;
+  padding: 1em 0;
+}
+/**********************************************
+*
+*
+*    Forms
+*
+*
+**********************************************/
+.frmTemplateTitle {
+  display: block;
+  padding: 1em;
+  margin: .5em 0;
+  width: 100%;
+
+  font-size: .8em;
+}
+
+.button--wrapper {
+  margin: 1em 0;
+  width: 100%;
+}
+
+/**********************************************
+*
+*
+*    Draggable Items
+*
+*
+**********************************************/
+.draggable {
+  padding: .5em 1em;
+  margin: 1em 0;
+  width: 100%;
+
+  background: #fcfcfc; 
+  background: -moz-linear-gradient(top, #fcfcfc 0%, #c6c6c6 100%, #7db9e8 100%); 
+  background: -webkit-linear-gradient(top, #fcfcfc 0%,#c6c6c6 100%,#7db9e8 100%);
+  background: linear-gradient(to bottom, #fcfcfc 0%,#c6c6c6 100%,#7db9e8 100%); 
+  border: solid 1px #ccc;
+  border-radius:  5px;
+  cursor:  pointer;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#7db9e8',GradientType=0 );
+  text-align: center;
+  text-transform: lowercase;
+}

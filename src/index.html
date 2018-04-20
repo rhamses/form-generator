@@ -3,94 +3,39 @@
 <head>
   <title></title>
   <link rel="stylesheet" type="text/css" href="css/formGen.css">
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
   <link rel="stylesheet" type="text/css" href="css/exampleForm.css">
-  <style>
-  #target,
-  #result,
-  #preview { 
-    border: solid 1px #ccc;
-    min-height: 25vw;
-    width: 25vw;
-    margin: 0;
-    background-color: #efefef;
-  }
-
-  #result,
-  #preview {
-    align-self: stretch;
-  }
-
-  #result {
-    margin-right: 1em;
-  }
-
-  #genJson {
-    margin: 0 1em;
-  }
-
-  #list {
-    align-self: flex-end;
-  }
-
-  #header {
-    margin: 1em 0;
-    padding: 1em;
-    width:  100%;
-    
-    border: solid 1px #ccc;
-
-  }
-
-  #list div {
-    padding: 1em;
-    margin: 1em 0;
-
-    border-top-right-radius:  10px;
-    border-bottom-right-radius:  10px;
-    
-    border: solid 1px #ccc;
-    border-left:  none;
-    text-align: center;
-  }
-
-  i{
-    font-style: italic;
-  }
-
-  small{
-    font-size: .9em;
-  }
-
-  main {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap:  wrap;
-  }
-
-  body {
-    font-family: sans-serif;
-  }
-</style>
+  <link rel="stylesheet" type="text/css" href="css/examplePage.css">
 </head>
 <body>
   <main>
-    <div id="header">
-      <label>Nome do Template:</label>
-      <input type="text" name="frmTemplate">
+    <div class="row">
+      <div class="container">
+        <div id="header">
+          <label>Template Name:</label>
+          <input type="text" name="frmTemplate" class="frmTemplateTitle" placeholder="insert the name of the template here. It'll be also the prefix of your form.">
+        </div>
+      </div>
     </div>
-    <div id="target">Drop Zone</div>
-    <div id="list">
-      <div id="list-1" draggable="true" class="draggable" data-type="input">input</div>
-      <div id="list-2" draggable="true" class="draggable" data-type="radio">radio</div>
-      <div id="list-3" draggable="true" class="draggable" data-type="checkbox">checkbox</div>
-      <div id="list-4" draggable="true" class="draggable" data-type="select">select</div>
-      <!-- <div id="list-5" draggable="true" class="draggable" data-type="button">button</div> -->
-      <div id="list-6" draggable="true" class="draggable" data-type="upload">Upload</div>
+    <div class="container flex">
+      <div id="target">
+        <h2 id="intro">Drop Zone</h2>
+      </div>
+      <div id="list">
+        <div id="list-1" draggable="true" class="draggable" data-type="input">input</div>
+        <div id="list-2" draggable="true" class="draggable" data-type="radio">radio</div>
+        <div id="list-3" draggable="true" class="draggable" data-type="checkbox">checkbox</div>
+        <div id="list-4" draggable="true" class="draggable" data-type="select">select</div>
+        <!-- <div id="list-5" draggable="true" class="draggable" data-type="button">button</div> -->
+        <div id="list-6" draggable="true" class="draggable" data-type="upload">Upload</div>
+      </div>
+      <div>
+        <button id="genJson" class="btn-success btn-json">Generate JSON</button>
+        <div id="preview"></div>
+      </div>
+      <div id="result"></div>
     </div>
-    <button id="genJson">Generate JSON</button>
-    <div id="result"></div>
-    <div id="preview"></div>
   </main>
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=default"></script>
 </body>
 </html>

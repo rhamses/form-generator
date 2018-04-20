@@ -11,6 +11,8 @@ const form = [];
 
 dropTarget.addEventListener("drop", drop_handler);
 dropTarget.addEventListener("dragover", dragover_handler);
+dropTarget.addEventListener("dragenter", dragenter_handler);
+dropTarget.addEventListener("dragleave", dragleave_handler);
 draggables.forEach( draggable => draggable.addEventListener("dragstart", dragstart_handler));
 
 jsonButton.addEventListener("click", createFormHtml);
@@ -29,18 +31,36 @@ function dragover_handler(ev)
   ev.dataTransfer.dropEffect = "move"
 }
 
+function dragenter_handler(ev) 
+{
+  ev.preventDefault();
+  console.log('entered', ev.target);
+  if (ev.target.id == "target") {
+    ev.target.classList.add("hovering")
+    // console.log('Comentário');
+  }
+}
+
+function dragleave_handler(ev) 
+{
+  ev.preventDefault();
+  console.log('leavered', ev.target);
+  checkChildTarget();
+}
+
 function drop_handler(ev) 
 {
   ev.preventDefault();
-  if (ev.target.id == "target") {
-    checkChildTarget(ev.target);
+  let droppedZone = '';
+  if (ev.target.id == "target" || ev.target.id == "intro") {
+    droppedZone = checkChildTarget(ev.target);
     const htmlEl = createInputElement(ev.dataTransfer.getData("text/plain"));
     let el = document.createElement("div");
     el.setAttribute("class", "form--item form--item__wrapper");
     el.innerHTML = htmlEl;
-    ev.target.appendChild(el);
+    droppedZone.appendChild(el);
     loadElements();
-  }
+  } 
 }
 
 function createInputElement(htmlType)
@@ -136,7 +156,7 @@ function formFilters(index = 0)
     select: {
       one: '<label class="option--container"><input type="checkbox" name="singleSelect-${index}" value="singleSelect">Single Select:</label>',
       all: '<label class="option--container"><input type="checkbox" name="multipleSelect-${index}" value="multipleSelect">Multiple Select:</label>',
-      items: '<div class="child--items"><input type="text" name="childItem[]"><button class="child--items__button">Remover Item</button></div>',
+      items: '<div class="child--items"><input type="text" name="childItem[]"><button class="child--items__button delete">Remover Item</button></div>',
     }
   }
 }
@@ -274,14 +294,12 @@ function generateJson()
 function createFormHtml()
 {
   const jsonForm = generateJson();
-  // const jsonForm = [{"title":"Data","type":"date","options":["isCurrent","isDisabled"]},{"title":"Entrega Conceito:","type":"date","required":true},{"title":"Entrega Plano:","type":"date","required":true},{"title":"Campanha:","type":"text","required":true},{"title":"Verba Campanha:","type":"number"},{"title":"Verba Display","type":"number"},{"title":"Inicio Campanha:","type":"datetime-local","required":true},{"title":"Fim Campanha:","type":"datetime-local","required":true},{"title":"Atendimento:","type":"select","required":true,"options":["multipleSelect"],"childItems":["Rhamses","Felippe","Debora"]},{"title":"Produto/Serviço","type":"textarea"},{"title":"Descrição Geral:","type":"textarea"},{"title":"Objetivo da comunicação:","type":"textarea"},{"title":"Público-Alvo","type":"textarea"},{"title":"Peças a serem Criadas","type":"text"},{"title":"Texto","type":"textarea","required":true},{"title":"Layout:","type":"textarea","required":true},{"title":"Informações adicionais:","type":"textarea"}];
   const result = document.querySelector("#result");
   const preview = document.querySelector("#preview");
 
   const form = document.createElement("form");
 
   jsonForm.map((el, index, array) =>{
-    console.log('el', el);
     let input = '';
     let type = '';
     let attr = '';
@@ -366,18 +384,21 @@ function createFormHtml()
   // const htmlForm = form;\
   result.innerText = '';
   result.insertAdjacentHTML('beforeend', `<code> ${JSON.stringify(jsonForm)} </code>`);
-  result.insertAdjacentHTML('beforeend', `<textarea class="resultado"></textarea>`);
+  result.insertAdjacentHTML('beforeend', `<textarea class="resultado" readonly></textarea>`);
   result.children.item(1).innerText = document.querySelector("form").outerHTML;
 }
 
 function checkChildTarget(target = null)
 {
-  if (target != null && target.innerText == 'Drop Zone') {
-    target.innerText = '';
+  if (target !== null && target.id == "intro"){
+    target.classList.add("hide");
+    return document.querySelector("#target");
   } else {
     target = document.querySelector("#target");
-    if (target.childNodes.length < 1) {
-      target.innerText = 'Drop Zone';
+    target.classList.remove('hovering');
+    if (target.childNodes.length == 1) {
+      target.firstChild.classList.remove("hide");
     }
+    return target;
   }
 }
