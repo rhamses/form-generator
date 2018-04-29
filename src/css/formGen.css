@@ -14,17 +14,12 @@
   transition: all .2s linear;
 }
 
-.form--item__wrapper.hide {
-  height: 30px;
-  overflow: hidden;
-}
-
 .form--item__wrapper .action--wrapper {
   float: right;
 }
 
 .form--item__wrapper .form--title {
-  margin: .1em 0 .5em;
+  margin: .4em 0 2em;
 
   cursor: pointer;
   font-size: 1em;

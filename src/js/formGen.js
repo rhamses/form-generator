@@ -111,10 +111,10 @@ function inputElementControls()
 {
   if (this.dataset.action == "toogleView") {
     let item = this.closest(".form--item__wrapper");
-    if (item.classList.contains("hide")) {
-      item.classList.remove("hide");
+    if (item.classList.contains("collapsed")) {
+      item.classList.remove("collapsed");
     } else {
-      item.classList.add("hide");
+      item.classList.add("collapsed");
     }
   } else {
     let parentEl = this.parentElement.parentElement;
@@ -299,7 +299,12 @@ function createFormHtml()
 
   const form = document.createElement("form");
 
-  jsonForm.map((el, index, array) =>{
+  if (document.querySelector('.frmTemplateTitle').value == '') {
+    alert("O Nome do Template é obrigatório");
+    return false;
+  }
+
+  jsonForm.map((el, index, array) => {
     let input = '';
     let type = '';
     let attr = '';
@@ -337,11 +342,11 @@ function createFormHtml()
 
     if (el.childItems) {
       if (el.type != "select") {
-        input = '';
-        for (item of el.childItems) {
+        for (let item of el.childItems) {
           input += `<label><input name="${el.slug}" type="${el.type}" value="${item}" ${attr}>${item}</label>`;
         }
       } else {
+        input += `<select name="${el.slug}" id="${el.title}" ${attr}>`;
         for (let item of el.childItems) {
           childItem += `<option value="${item}">${item}</option>`;
         }
@@ -353,7 +358,10 @@ function createFormHtml()
       switch (el.type) {
         case 'select':
         label = `<label>${el.title}</label>`;
-        input = `<select name="${el.slug}" id="${el.title}" ${attr}>`;
+        break;
+        case 'radio':
+        break;
+        case 'checkbox':
         break;
         case 'textarea':
         label = `<label>${el.title}</label>`;
@@ -369,7 +377,7 @@ function createFormHtml()
       }
       component = `<div class="form--element">${label} ${input}</div>`;
     }
-
+    console.log('component', component, input);
     form.insertAdjacentHTML('beforeEnd', component);
   });
 
@@ -380,10 +388,9 @@ function createFormHtml()
 
   preview.innerText = '';
   preview.appendChild(form);
-
-  // const htmlForm = form;\
+  
   result.innerText = '';
-  result.insertAdjacentHTML('beforeend', `<code> ${JSON.stringify(jsonForm)} </code>`);
+  result.insertAdjacentHTML('beforeend', `${jsonDisplay.outputPretty(JSON.stringify(jsonForm))}`);
   result.insertAdjacentHTML('beforeend', `<textarea class="resultado" readonly></textarea>`);
   result.children.item(1).innerText = document.querySelector("form").outerHTML;
 }
